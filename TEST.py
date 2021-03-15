@@ -16,7 +16,6 @@ soup2 = BeautifulSoup(json.loads(re.findall(r'xxx\((.*)\)', requests.get(url2.fo
 
 
 def print_table(soup):
-    list = []
     for i, tr in enumerate(soup.select('tr')):
         row_data = [td.text for td in tr.select('td, th') if td.text]
         if not row_data:
@@ -25,11 +24,10 @@ def print_table(soup):
             row_data = ['X'] + row_data
         for j, td in enumerate(row_data):
             if j==0:
-                list.append(str(td))
+                print('{: >30}'.format(td), end='|')
             else:
-                list.append(str(td))
+                print('{: ^12}'.format(td), end='|')
         print()
-    return list
 
 c = print_table(soup2)
 a=[]
