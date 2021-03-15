@@ -16,6 +16,7 @@ soup2 = BeautifulSoup(json.loads(re.findall(r'xxx\((.*)\)', requests.get(url2.fo
 
 
 def print_table(soup):
+    list = []
     for i, tr in enumerate(soup.select('tr')):
         row_data = [td.text for td in tr.select('td, th') if td.text]
         if not row_data:
@@ -24,21 +25,31 @@ def print_table(soup):
             row_data = ['X'] + row_data
         for j, td in enumerate(row_data):
             if j==0:
-                print('{: >30}'.format(td), end='|')
+                list.append(str('{: >30}'.format(td)))
             else:
-                print('{: ^12}'.format(td), end='|')
+                list.append(str('{: ^12}'.format(td)))
         print()
+    return list
+
 
 c = print_table(soup2)
-a=[]
+d =[]
+l = []
 for x in c:
-    if x == 'X':
-        continue
-    elif x == 'Operating Income %':
-        continue
-    else:
-        a.append(x)
+    x = x.strip()
+    d.append(x)
+for x in d:
+    try:
+        x = int(re.sub(r'[^\d-]+', '', x))
+        l.append(x)
+    except ValueError:
+        l.append(x)
 
-b = {a[i]: a[i+1:i+12] for i in range(0, len(a), 12)}
 
-print(c)
+
+
+
+
+b = {l[i]: l[i+1:i+12] for i in range(0, len(l), 12)}
+
+print(b)
