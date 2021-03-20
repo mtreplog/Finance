@@ -33,23 +33,28 @@ def print_table(soup):
 
 
 c = print_table(soup2)
-d =[]
-l = []
-for x in c:
-    x = x.strip()
-    d.append(x)
-for x in d:
-    try:
-        x = int(re.sub(r'[^\d-]+', '', x))
-        l.append(x)
-    except ValueError:
-        l.append(x)
 
+def clean_list(soup):
+    strip = []
+    clean = []
+    for x in c:
+        x = x.strip()
+        strip.append(x)
+    for x in strip:
+        try:
+            x = int(re.sub(r'[^\d-]+', '', x))
+            clean.append(x)
+        except ValueError:
+            clean.append(x)
+    return clean
 
-
-
-
+l = clean_list(c)
+print(l)
+for x in range(100):
+    if l[x] == 'X':
+        l.pop(x)
+        l.pop(x+1)
+print(l)
+#b = {l[i]: l[i+1:i+12] for i in range(0, len(l), 12)}
 
 b = {l[i]: l[i+1:i+12] for i in range(0, len(l), 12)}
-
-print(b)
