@@ -24,4 +24,20 @@ BalanceSheet = cdf[4]
 Liquidity = cdf[5]
 Efficiency = cdf[6]
 
-print(Profit)
+print(Liquidity)
+
+
+
+def columnsdate(x):
+    df = x
+    df.columns = [(datetime.strptime(x[:4],'%Y')).year if x[0] == '2' else x for x in df.columns]
+    return df
+
+
+def Leaders(x):
+       df = x
+       df = df.set_index('Liquidity/Financial Health')
+       #df[change] = df.pct_change()
+
+       df = df.replace('-',np.NaN)
+       return df
