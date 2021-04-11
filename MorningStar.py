@@ -46,7 +46,24 @@ def Leaders(x):
        df = df.replace('-',np.NaN)
        return df
 
-def CleanDF():
+ def CleanDF(x):
+        df = x
+        df = df.set_index(df.columns[0])
+        #df[change] = df.pct_change()
+
+        colnames = []
+
+
+        for col in df.columns:
+            colnames.append(col)
+
+
+        for i in range(len(colnames)):
+            df[colnames[i]] = pd.to_numeric(df[colnames[i]],errors='coerce')
+
+        return df
+
+def VigilantLeaders():
     df = CleanDF(Liquidity).T
     df1 = CleanDF(Profit).T
     DE=df['Debt/Equity']
@@ -58,6 +75,8 @@ def CleanDF():
     CR.plot()
     print(df)
     return print("1) D/E ratio of below .5 is preferred. Debt can disrupt even the best business because it limits flexbility \n 2) To maintain flexiblity you should also make sure that you are getting more cash in than what is going out. This can be measured by teh current ratio, which should be great than 1.5 \n 3)Vigilant leaders also aim to make a decent ROE Above 8% consistently over a period of ten years is a strong indication of great management")
+
+x = VigilantLeaders()
 
 
 
